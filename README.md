@@ -1,6 +1,7 @@
 Go projesine başlarken
 
 `go mod init github.com/dilaragorum/snippetbox`
+
 `go mod tidy`
 
 # Web Applications Basic

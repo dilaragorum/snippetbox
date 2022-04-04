@@ -15,6 +15,8 @@ func main() {
 	// register the home function as the handler for the "/" URL pattern.
 	router := http.NewServeMux()
 	router.HandleFunc("/", home)
+	router.HandleFunc("/snippet", showSnippet)
+	router.HandleFunc("/snippet/create", createSnippet)
 
 	// Use the http.ListenAndServe() function to start a new web server. We pass
 	// two parameters: the TCP network address to listen on (in this case ":4000
@@ -22,13 +24,25 @@ func main() {
 	// we use the log.Fatal() function to log the error message and exit.
 	log.Println("Starting server on :4000")
 
-	err := http.ListenAndServe(":4000", router)
+	err := http.ListenAndServe(":4000", router) //4000. porta gelen http isteklerini router karşılayaccak. İlgili handler'a route edecek.
 	log.Fatal(err)
 }
 
 // Define a home handler function which writes a byte slice containing
 // "Hello from Snippetbox" as the response body.
 func home(w http.ResponseWriter, r *http.Request) {
-	log.Println(r.URL, r.Method, "isteği alındı")
+	if r.URL.Path != "/" {
+		http.NotFound(w, r)
+		return
+	}
+	// Handler func
 	w.Write([]byte("Hello from Snippetbox"))
+}
+
+func showSnippet(w http.ResponseWriter, r *http.Request) { // Handler func
+	w.Write([]byte("Show Specific Snippet"))
+}
+
+func createSnippet(w http.ResponseWriter, r *http.Request) { // Handler func
+	w.Write([]byte("Create Snippet"))
 }
