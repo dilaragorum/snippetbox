@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 // OS Knowledge: stdout, stdin, stderr ---> File descriptior
@@ -39,8 +41,22 @@ func home(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Hello from Snippetbox"))
 }
 
-func showSnippet(w http.ResponseWriter, r *http.Request) { // Handler func
-	w.Write([]byte("Show Specific Snippet"))
+type DilaraWriter struct{}
+
+func (s DilaraWriter) Write(p []byte) (n int, err error) {
+	return 0, nil
+}
+
+func showSnippet(w http.ResponseWriter, r *http.Request) {
+	id, err := strconv.Atoi(r.URL.Query().Get("id"))
+	if err != nil || id < 1 {
+		http.NotFound(w, r)
+		return
+	}
+	dilaraWriter := DilaraWriter{}
+	_ = dilaraWriter
+
+	fmt.Fprintf(w, "Gelen ID: %d\n", id)
 }
 
 // curl -X POST http://localhost:4000/snippet/create
