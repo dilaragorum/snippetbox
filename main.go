@@ -43,6 +43,14 @@ func showSnippet(w http.ResponseWriter, r *http.Request) { // Handler func
 	w.Write([]byte("Show Specific Snippet"))
 }
 
+// curl -X POST http://localhost:4000/snippet/create
+// curl -i -X POST http://localhost:4000/snippet/createSnippet
+// -i HEADER'ları da gösterir
 func createSnippet(w http.ResponseWriter, r *http.Request) { // Handler func
+	if r.Method != "POST" {
+		w.Header().Set("Allow", "POST")
+		http.Error(w, "method not allowed", 405)
+		return
+	}
 	w.Write([]byte("Create Snippet"))
 }
