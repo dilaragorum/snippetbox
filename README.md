@@ -16,3 +16,5 @@ application and the corresponding handlers.
 
 **Web server**: One of the great things about Go is that you can establish a web server
 and listen for incoming requests as part of your application itself. (Nginx or Apache)
+
+go run cmd/web/\*
